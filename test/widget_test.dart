@@ -52,7 +52,7 @@ void main() {
 
       // ON HOME PAGE
 
-      final secondButton = find.widgetWithText(ElevatedButton, 'Book Now').at(1);
+      final secondButton = find.widgetWithText(ElevatedButton, 'Book Now').at(1); // ensures button itself is being tapped
       await tester.ensureVisible(secondButton);
       await tester.pumpAndSettle();
       await tester.tap(secondButton, warnIfMissed: true);
