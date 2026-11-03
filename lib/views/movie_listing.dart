@@ -23,9 +23,6 @@ class _MovieListingViewState extends State<MovieListingView> {
           widget.movie.title,
           style: cinemaHeaderStyle,
         ),
-        backgroundColor: cinemaSurface,
-        iconTheme: const IconThemeData(color: cinemaBrand),
-        elevation: 0,
       ),
       drawer: const NavDrawer(),
       body: SingleChildScrollView(
