@@ -32,11 +32,10 @@ class CartRepository {
   double getTotalPrice() {
     double total = 0.0;
     for (final CartItem item in _items) {
-      total += item.movieTotalPrice;
+      total += (item.movieTotalPrice + item.serviceFee);
     }
     return total;
   }
-
 
   double getServiceFee() {
     double totalServiceFee = 0.0;

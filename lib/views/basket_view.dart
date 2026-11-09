@@ -31,30 +31,64 @@ class _BasketViewState extends State<BasketView> {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 8.0),
       child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
-            '${item.quantity} Tickets',
-            style: const TextStyle(fontWeight: FontWeight.w600),
+          Padding(
+            padding: const EdgeInsets.only(top: 8.0),
+            child: Text(
+              '${item.quantity} Tickets',
+              style: const TextStyle(
+                color: cinemaBrand,
+                fontWeight: FontWeight.w600,
+              ),
+            ),
           ),
-          const SizedBox(width: 4),
-          Column(
+          const SizedBox(width: 16),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text('${item.quantity} Standard'),
+                Text(
+                  '${item.movie.title}, ${item.movie.screeningTime}',
+                  style: TextStyle(fontSize: 12, color: Colors.grey[700]),
+                ),
+              ],
+            ),
+          ),
+          const SizedBox(width: 12),
+          Row(
+            mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text('${item.quantity} Standard'),
-              Text(
-                '(${item.movie.title}, ${item.movie.screeningTime})',
-                style: TextStyle(fontSize: 12, color: Colors.grey[700]),
+              Padding(
+                padding: const EdgeInsets.only(top: 8.0),
+                child: Text(
+                  '£${item.movieTotalPrice.toStringAsFixed(2)}',
+                ),
+              ),
+              const SizedBox(width: 12),
+              SizedBox(
+                width: 60,
+                height: 60,
+                child: IconButton(
+                  style: IconButton.styleFrom(
+                    backgroundColor: cinemaBrand,
+                    foregroundColor: cinemaFontWhite,
+                    shape: const RoundedRectangleBorder(
+                      borderRadius: BorderRadius.zero,
+                    ),
+                    padding: EdgeInsets.zero,
+                  ),
+                  icon: const Icon(Icons.delete_outline),
+                  onPressed: () {
+                    setState(() {
+                      cart.removeItem(index);
+                    });
+                  },
+                ),
               ),
             ],
-          ),
-          Text('£${item.movieTotalPrice.toStringAsFixed(2)}'),
-          IconButton(
-            icon: const Icon(Icons.delete_outline, color: Colors.red),
-            onPressed: () {
-              setState(() {
-                cart.removeItem(index);
-              });
-            },
           ),
         ],
       ),
@@ -84,7 +118,8 @@ class _BasketViewState extends State<BasketView> {
   Widget _buildBasketList(CartRepository cart, List<CartItem> items) {
     final List<Widget> children = [];
 
-    children.add(const Text('MY BASKET', style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold)));
+    children.add(const Text('MY BASKET',
+        style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold)));
     children.add(const SizedBox(height: 16));
 
     for (int index = 0; index < items.length; index++) {
@@ -109,7 +144,7 @@ class _BasketViewState extends State<BasketView> {
 
     children.add(
       SizedBox(
-        width: double.infinity,
+        height: 24,
         child: PrimaryButton(
           label: 'Checkout',
           onPressed: () {
@@ -141,8 +176,9 @@ class _BasketViewState extends State<BasketView> {
           children: [
             _buildEmptyState(),
             const SizedBox(height: 12.0),
-            Text(_confirmationMessage,
-                style: const TextStyle(fontWeight: FontWeight.bold),
+            Text(
+              _confirmationMessage,
+              style: const TextStyle(fontWeight: FontWeight.bold),
             ),
           ],
         );
@@ -154,18 +190,16 @@ class _BasketViewState extends State<BasketView> {
     }
 
     return Scaffold(
-      appBar: AppBar(
-        title: const Text(
-          appTitle,
-          style: cinemaHeaderStyle,
+        appBar: AppBar(
+          title: const Text(
+            appTitle,
+            style: cinemaHeaderStyle,
+          ),
         ),
-      ),
-      drawer: const NavDrawer(),
-
-      body: SingleChildScrollView(
-        padding: EdgeInsets.all(16.0),
-        child: content,
-      )
-    );
+        drawer: const NavDrawer(),
+        body: SingleChildScrollView(
+          padding: EdgeInsets.all(16.0),
+          child: content,
+        ));
   }
 }
