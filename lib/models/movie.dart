@@ -29,7 +29,8 @@ class Movie {
     final String imagePath = json["imagePath"] as String;
     final String ageRating = json["ageRating"] as String;
     final String screeningTime = json["screeningTime"] as String;
-    final double price = json["price"] as double;
+    final num priceNumber = json['price'] as num;
+    final double price = priceNumber.toDouble();
 
     return Movie(
       id: id,
@@ -41,5 +42,20 @@ class Movie {
       screeningTime: screeningTime,
       price: price,
     );
+  }
+
+  //returns a map, not JSON text, can be decoded later with dart:convert if needed
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = <String, dynamic>{
+      'id': id,
+      'title': title,
+      'description': description,
+      'runTime': runTime,
+      'imagePath': imagePath,
+      'ageRating': ageRating,
+      'screeningTime': screeningTime,
+      'price': price,
+    };
+    return data;
   }
 }
