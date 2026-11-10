@@ -1,0 +1,22 @@
+[
+    {
+        "ageRating": "PG-13",
+        "description": "The war for Arrakis begins. Paul Atreides unites with Chani and the Fremen while seeking revenge against the conspirators who destroyed his family.",
+        "id": "dune",
+        "imagePath": "assets/images/dune2Poster1.jfif",
+        "price": 12.50,
+        "runTime": "2h 46",
+        "screeningTime": "Wednesday, 30th September 2026, 18:00 - 20:46",
+        "title": "Dune: Part Two (2024)"
+    },
+    {
+        "ageRating": "PG-13",
+        "description": "In his second year of fighting crime, Batman uncovers corruption in Gotham City that connects to his own family while facing a serial killer known as the Riddler.",
+        "id": "batman",
+        "imagePath": "assets/images/theBatmanPoster.jfif",
+        "price": 10.00,
+        "runTime": "2h 56",
+        "screeningTime": "Friday, 2nd October 2026, 20:00 - 22:56",
+        "title": "The Batman (2022)"
+    }
+]
