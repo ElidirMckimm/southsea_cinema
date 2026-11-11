@@ -6,7 +6,7 @@ class MovieRepository {
   List<Movie>? _cachedMovies;
 
   List<Movie> getMovies() {
-
+      
     final List<Movie>? cachedMovies = _cachedMovies;
     if (cachedMovies != null) {
       return cachedMovies;

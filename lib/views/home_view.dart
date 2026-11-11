@@ -10,11 +10,9 @@ class HomeView extends StatefulWidget {
 
   @override
   State<HomeView> createState() => _HomeViewState();
-
 }
 
 class _HomeViewState extends State<HomeView> {
-
   List<Movie> _movies = [];
   bool _loading = true;
   String _errorMessage = '';
@@ -28,8 +26,7 @@ class _HomeViewState extends State<HomeView> {
   Future<void> _loadMovies() async {
     try {
       final MovieRepository repository = MovieRepository();
-      final List<Movie> movies = 
-          await repository.loadMoviesFromAsset();
+      final List<Movie> movies = await repository.loadMoviesFromAsset();
       //mounted is true while the state belongs to the widget tree
       if (!mounted) {
         return;
@@ -65,16 +62,14 @@ class _HomeViewState extends State<HomeView> {
       );
     }
 
-
     return Scaffold(
-      appBar: AppBar(
-        title: const Text(
-          appTitle,
-          style: cinemaHeaderStyle,
+        appBar: AppBar(
+          title: const Text(
+            appTitle,
+            style: cinemaHeaderStyle,
+          ),
         ),
-      ),
-      drawer: const NavDrawer(),
-      body: body
-    );
+        drawer: const NavDrawer(),
+        body: body);
   }
 }

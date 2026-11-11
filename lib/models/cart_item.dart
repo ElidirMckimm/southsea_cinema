@@ -8,9 +8,4 @@ class CartItem {
 
   double get serviceFee => 0.50 * quantity;
   double get movieTotalPrice => movie.price * quantity;
-
-
-
 }
-
-
