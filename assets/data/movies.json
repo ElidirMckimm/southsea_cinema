@@ -18,5 +18,25 @@
         "runTime": "2h 56",
         "screeningTime": "Friday, 2nd October 2026, 20:00 - 22:56",
         "title": "The Batman (2022)"
+    },
+    {
+        "ageRating": "PG-13",
+        "description": "Mia and Sebastian are two artists struggling to succeed in Hollywood, through musical and chance encounters their relationship grows but career dreams strain their romance",
+        "id": "lalaland",
+        "imagePath": "assets/images/lalalandPoster.jfif",
+        "price": 8.00,
+        "runTime": "2h 8",
+        "screeningTime": "Thursday, 11th October 2026, 12:00 - 14:08",
+        "title": "La La Land (2016)"
+    },
+    {
+        "ageRating": "n/a",
+        "description": "n/a",
+        "id": "n/a",
+        "imagePath": "assets/images/na.jfif",
+        "price": "free",
+        "runTime": "na",
+        "screeningTime": "na",
+        "title": "na"
     }
 ]
