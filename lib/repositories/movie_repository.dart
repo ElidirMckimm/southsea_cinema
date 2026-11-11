@@ -1,7 +1,17 @@
 import 'package:southsea_cinema/models/movie.dart';
+import 'dart:convert';
+import 'package:flutter/services.dart';
 
 class MovieRepository {
+  List<Movie>? _cachedMovies;
+
   List<Movie> getMovies() {
+
+    final List<Movie>? cachedMovies = _cachedMovies;
+    if (cachedMovies != null) {
+      return cachedMovies;
+    }
+
     return const [
       Movie(
           id: 'dune',
@@ -34,5 +44,31 @@ class MovieRepository {
     }
     return null;
   }
+
+  //calling loadMovies reads the JSON file
+  Future<List<Movie>> loadMoviesFromAsset({
+    String assetPath = 'assets/data/movies.json'
+  }) async {
+    //when a text string is available rootbundle reads it
+    final String jsonString = await rootBundle.loadString(assetPath);
+    final dynamic decodedData = jsonDecode(jsonString);
+    //know we are returning a list
+    //takes decoded list and assigns to jsonList
+    final List<dynamic> jsonList = decodedData as List<dynamic>;
+    final List<Movie> loadedMovies = [];
+
+    //loops through all movie entries
+    for (final dynamic item in jsonList) {
+      //converts them to a map so fields can be read by id etc.
+      final Map<String, dynamic> itemMap = item as Map<String, dynamic>;
+      //converts from json file to movie
+      final Movie movie = Movie.fromJson(itemMap);
+      loadedMovies.add(movie);
+    }
+
+    _cachedMovies = loadedMovies;
+    return loadedMovies;
+  }
+
 }
 //Movie? getMovieById(String id)
