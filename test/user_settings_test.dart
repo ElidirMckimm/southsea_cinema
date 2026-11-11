@@ -55,4 +55,36 @@ void main() {
     final Switch switchWidget = tester.widget<Switch>(find.byType(Switch));
     expect(switchWidget.value, isTrue);
   });
+
+  testWidgets('Save Persist test', (WidgetTester tester) async {
+    SharedPreferencesAsyncPlatform.instance =
+        InMemorySharedPreferencesAsync.empty();
+
+    await tester.pumpWidget(const MaterialApp(home: SettingsView()));
+    await tester.pumpAndSettle();
+
+    final fields = find.byType(TextField);
+
+    await tester.enterText(fields.at(0), 'Geralt Rivia');
+    await tester.enterText(fields.at(1), 'Heidel, HO24 7JR');
+    await tester.enterText(fields.at(2), 'geraltrivia@example.com');
+
+    await tester.tap(find.byType(Switch));
+    await tester.pump();
+
+    await tester.tap(find.byType(ElevatedButton));
+    await tester.pumpAndSettle();
+
+    expect(find.text('Settings saved for Geralt Rivia'), findsOneWidget);
+
+    await tester.pumpWidget(const SizedBox.shrink());
+    await tester.pumpWidget(const MaterialApp(home: SettingsView()));
+    await tester.pumpAndSettle();
+
+    expect(find.text('Geralt Rivia'), findsOneWidget);
+    expect(find.text('geraltrivia@example.com'), findsOneWidget);
+    expect(find.text('Heidel, HO24 7JR'), findsOneWidget);
+    final Switch switchWidget = tester.widget<Switch>(find.byType(Switch));
+    expect(switchWidget.value, isTrue);
+  });
 }

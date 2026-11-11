@@ -82,7 +82,7 @@ class _SettingsViewState extends State<SettingsView> {
     _nameController.dispose();
     _addressController.dispose();
     _emailController.dispose();
-
+    super.dispose();
   }
 
   Future<void> _saveSettings() async {
