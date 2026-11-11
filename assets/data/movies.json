@@ -34,7 +34,7 @@
         "description": "n/a",
         "id": "n/a",
         "imagePath": "assets/images/na.jfif",
-        "price": "free",
+        "price": 0.00,
         "runTime": "na",
         "screeningTime": "na",
         "title": "na"
