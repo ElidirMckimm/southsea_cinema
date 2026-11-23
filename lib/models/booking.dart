@@ -1,11 +1,11 @@
-class OrderRecord {
+class BookingRecord {
   final int? id;
   final int bookingNumber;
   final String summary;
   final double total;
   final String date;
 
-  const OrderRecord({
+  const BookingRecord({
     this.id,
     required this.bookingNumber,
     required this.summary,
@@ -27,14 +27,14 @@ class OrderRecord {
     return data;
   }
 
-  factory OrderRecord.fromMap(Map<String, Object?> map) {
+  factory BookingRecord.fromMap(Map<String, Object?> map) {
     final int bookingNumber = map['booking_number'] as int;
     final String summary = map['summary'] as String;
     final num totalNumber = map['total'] as num;
     final double total = totalNumber.toDouble();
     final String date = map['date'] as String;
 
-    return OrderRecord(
+    return BookingRecord(
       id: map['id'] as int?,
       bookingNumber: bookingNumber,
       summary: summary,

@@ -2,10 +2,10 @@ import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:southsea_cinema/models/booking.dart';
 
-class MovieDatabase {
-  MovieDatabase._internal();
+class CinemaDatabase {
+  CinemaDatabase._internal();
 
-  static final MovieDatabase instance = MovieDatabase._internal();
+  static final CinemaDatabase instance = CinemaDatabase._internal();
 
   static Database? _database;
 
@@ -70,19 +70,19 @@ class MovieDatabase {
     });
   }
 
-  Future<int> insertBooking(OrderRecord order) async {
+  Future<int> insertBooking(BookingRecord order) async {
     final Database db = await database;
     final int id = await db.insert('orders', order.toMap());
     return id;
   }
 
-  Future<List<OrderRecord>> getAllBookings() async {
+  Future<List<BookingRecord>> getAllBookings() async {
     final Database db = await database;
     final List<Map<String, Object?>> records =
         await db.query('orders', orderBy: 'booking_number DESC');
-    final List<OrderRecord> bookings = [];
+    final List<BookingRecord> bookings = [];
     for (final Map<String, Object?> row in records) {
-      bookings.add(OrderRecord.fromMap(row));
+      bookings.add(BookingRecord.fromMap(row));
     }
     return bookings;
   }
