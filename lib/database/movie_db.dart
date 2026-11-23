@@ -86,4 +86,29 @@ class MovieDatabase {
     }
     return bookings;
   }
+
+  Future<int> getNextBookingNumber() async {
+    final Database db = await database;
+    final List<Map<String, Object?>> records =
+        await db.rawQuery('SELECT MAX(booking_number) as max_num FROM orders');
+
+    if (records.isEmpty) {
+      return 1001;
+    }
+    final Object? maxValue = records[0]['max_value'];
+    if (maxValue == null) {
+      return 1001;
+    }
+
+    final int currentMax = maxValue as int;
+    return currentMax + 1;
+  }
+
+  Future<void> close() async {
+    final Database? cachedDatabase = _database;
+    if (cachedDatabase != null) {
+      await cachedDatabase.close();
+      _database = null;
+    }
+  }
 }
