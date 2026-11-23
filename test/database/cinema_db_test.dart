@@ -1,3 +1,5 @@
+import 'dart:nativewrappers/_internal/vm/lib/math_patch.dart';
+
 import 'package:flutter_test/flutter_test.dart';
 import 'package:southsea_cinema/database/cinema_db.dart';
 import 'package:southsea_cinema/models/booking.dart';
@@ -22,10 +24,23 @@ void main() {
 
   BookingRecord buildBooking(int orderNumber, String summary, double total) {
     return BookingRecord(
-      bookingNumber: orderNumber,
-      summary: summary,
-      total: total,
-      date: '30th September 2026'
-    );
+        bookingNumber: orderNumber,
+        summary: summary,
+        total: total,
+        date: '30th September 2026');
   }
+
+  test('insertBooking stores a booking and returns its id', () async {
+    final int id = await CinemaDatabase.instance.insertBooking(
+      buildBooking(1001, '2 x Dune Part 2 Tickets', 26.00),
+    );
+    expect(id, greaterThan(0));
+
+    final List<BookingRecord> bookings =
+        await CinemaDatabase.instance.getAllBookings();
+    expect(bookings.length, 1);
+    expect(bookings[0].id, id);
+    expect(bookings[0].summary, '2 x Dune Part 2 Tickets');
+    expect(bookings[0].total, 26.00);
+  });
 }
