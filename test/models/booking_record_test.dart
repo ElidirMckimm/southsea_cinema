@@ -1,5 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:southsea_cinema/models/booking.dart';
+import 'package:southsea_cinema/models/booking_record.dart';
 
 void main() {
   const BookingRecord booking = BookingRecord(

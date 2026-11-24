@@ -1,6 +1,6 @@
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
-import 'package:southsea_cinema/models/booking.dart';
+import 'package:southsea_cinema/models/booking_record.dart';
 
 class CinemaDatabase {
   CinemaDatabase._internal();

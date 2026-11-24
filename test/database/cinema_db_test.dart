@@ -2,7 +2,7 @@ import 'dart:nativewrappers/_internal/vm/lib/math_patch.dart';
 
 import 'package:flutter_test/flutter_test.dart';
 import 'package:southsea_cinema/database/cinema_db.dart';
-import 'package:southsea_cinema/models/booking.dart';
+import 'package:southsea_cinema/models/booking_record.dart';
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 
 void main() {
