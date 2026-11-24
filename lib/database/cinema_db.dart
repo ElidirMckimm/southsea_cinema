@@ -1,6 +1,6 @@
 import 'package:path/path.dart';
-import 'package:sqflite/sqflite.dart';
 import 'package:southsea_cinema/models/booking_record.dart';
+import 'package:sqflite/sqflite.dart';
 
 class CinemaDatabase {
   CinemaDatabase._internal();
@@ -95,7 +95,7 @@ class CinemaDatabase {
     if (records.isEmpty) {
       return 1001;
     }
-    final Object? maxValue = records[0]['max_value'];
+    final Object? maxValue = records[0]['max_num'];
     if (maxValue == null) {
       return 1001;
     }
