@@ -52,21 +52,21 @@ class CinemaDatabase {
       'booking_number': 1003,
       'summary': '2 x Dune Part 2 Tickets',
       'total': 26.0,
-      'date': '30th September 2026',
+      'date': '03/10/2026 18:00',
     });
 
     await db.insert('orders', <String, Object?>{
       'booking_number': 1002,
       'summary': '1 x Dune Part 2 Tickets',
       'total': 13.0,
-      'date': '30th September 2026',
+      'date': '06/11/2026 21:00',
     });
 
     await db.insert('orders', <String, Object?>{
       'booking_number': 1001,
       'summary': '2 x The Batman Tickets',
       'total': 21.0,
-      'date': '2nd October 2026',
+      'date': '02/10/2026 20:00',
     });
   }
 

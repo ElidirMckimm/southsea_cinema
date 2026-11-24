@@ -25,7 +25,7 @@ void main() {
         bookingNumber: orderNumber,
         summary: summary,
         total: total,
-        date: '30th September 2026');
+        date: '02/10/2026 20:00');
   }
 
   test('insertBooking stores a booking and returns its id', () async {

@@ -4,6 +4,8 @@ import 'package:southsea_cinema/widgets/nav_drawer.dart';
 import 'package:southsea_cinema/models/cart_item.dart';
 import 'package:southsea_cinema/repositories/cart_repository.dart';
 import 'package:southsea_cinema/widgets/primary_button.dart';
+import 'package:southsea_cinema/database/cinema_db.dart';
+import 'package:southsea_cinema/models/booking_record.dart';
 
 class BasketView extends StatefulWidget {
   const BasketView({super.key});
@@ -14,6 +16,55 @@ class BasketView extends StatefulWidget {
 
 class _BasketViewState extends State<BasketView> {
   String _confirmationMessage = '';
+
+  String _buildSummary(List<CartItem> items) {
+    final List<String> parts = [];
+    for (final CartItem item in items) {
+      parts.add('${item.quantity} x ${item.movie.title}');
+    }
+    return parts.join(', ');
+  }
+
+  String _formatDate(DateTime now) {
+    final String day = now.day.toString().padLeft(2, '0');
+    final String month = now.month.toString().padLeft(2, '0');
+    final String hour = now.hour.toString().padLeft(2, '0');
+    final String minute = now.minute.toString().padLeft(2, '0');
+    return '$day/$month/${now.year} $hour:$minute';
+  }
+
+  Future<void> _checkout(CartRepository cart, List<CartItem> items) async {
+    final String summary = _buildSummary(items);
+    final double total = cart.getTotalPrice();
+    final String date = _formatDate(DateTime.now());
+
+    try {
+      final CinemaDatabase database = CinemaDatabase.instance;
+      final int bookingNumber = await database.getNextBookingNumber();
+      final BookingRecord record = BookingRecord(
+        bookingNumber: bookingNumber,
+        summary: summary,
+        total: total,
+        date: date,
+      );
+
+      await database.insertBooking(record);
+      cart.clearCart();
+      if (!mounted) {
+        return;
+      }
+      setState(() {
+        _confirmationMessage = 'Booking $bookingNumber saved';
+      });
+    } catch (error) {
+      if (!mounted) {
+        return;
+      }
+      setState(() {
+        _confirmationMessage = 'Could not save your booking: $error';
+      });
+    }
+  }
 
   Widget _buildEmptyState() {
     return const Center(
@@ -149,8 +200,7 @@ class _BasketViewState extends State<BasketView> {
           label: 'Checkout',
           onPressed: () {
             setState(() {
-              cart.clearCart();
-              _confirmationMessage = 'Thanks, your order is on its way';
+              _checkout(cart, items);
             });
           },
         ),
