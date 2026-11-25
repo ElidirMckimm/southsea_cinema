@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:southsea_cinema/constants.dart';
-import 'package:southsea_cinema/widgets/nav_drawer.dart';
-import 'package:southsea_cinema/models/cart_item.dart';
-import 'package:southsea_cinema/repositories/cart_repository.dart';
-import 'package:southsea_cinema/widgets/primary_button.dart';
 import 'package:southsea_cinema/database/cinema_db.dart';
 import 'package:southsea_cinema/models/booking_record.dart';
+import 'package:southsea_cinema/models/cart_item.dart';
+import 'package:southsea_cinema/repositories/cart_repository.dart';
+import 'package:southsea_cinema/widgets/nav_drawer.dart';
+import 'package:southsea_cinema/widgets/primary_button.dart';
 
 class BasketView extends StatefulWidget {
   const BasketView({super.key});
@@ -39,45 +39,66 @@ class _BasketViewState extends State<BasketView> {
   }
 
   Widget _buildBookingHistory() {
+    final List<Widget> children = <Widget>[
+      const Text(
+        'Booking History',
+        style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+      ),
+      const SizedBox(height: 16),
+    ];
+
     if (_loadingBookings) {
-      return const CircularProgressIndicator();
-    }
-
-    if (_bookings.isEmpty) {
-      return const Text('No bookings yet');
-    }
-
-    return Column(
-      children: _bookings.map((booking) {
-        return Card(
-          margin: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
-          child: Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: <Widget>[
-                    Text(
-                      'Booking #${booking.bookingNumber}',
-                      style: const TextStyle(fontWeight: FontWeight.bold),
-                    ),
-                    Text('£${booking.total.toStringAsFixed(2)}'),
-                  ],
-                ),
-                const SizedBox(height: 4),
-                Text(booking.summary),
-                const SizedBox(height: 4),
-                Text(
-                  booking.date,
-                  style: const TextStyle(fontSize: 12, color: cinemaFontWhite),
-                ),
-              ],
+      children.add(const CircularProgressIndicator());
+    } else if (_bookings.isEmpty) {
+      children.add(const Text('No bookings yet'));
+    } else {
+      for (final BookingRecord booking in _bookings) {
+        children.add(
+          Card(
+            color: cinemaBrand,
+            margin: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+            child: Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: <Widget>[
+                      Text(
+                        'Booking #${booking.bookingNumber}',
+                        style: const TextStyle(
+                            fontWeight: FontWeight.bold,
+                            color: cinemaFontWhite),
+                      ),
+                      Text(
+                        '£${booking.total.toStringAsFixed(2)}',
+                        style: const TextStyle(color: cinemaFontWhite),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 4),
+                  Text(
+                    booking.summary,
+                    style: TextStyle(color: cinemaFontWhite),
+                  ),
+                  const SizedBox(height: 4),
+                  Text(
+                    booking.date,
+                    style:
+                        const TextStyle(fontSize: 12, color: cinemaFontWhite),
+                  ),
+                ],
+              ),
             ),
           ),
         );
-      }).toList(),
+      }
+    }
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: children,
     );
   }
 
@@ -271,18 +292,6 @@ class _BasketViewState extends State<BasketView> {
       ),
     );
 
-    children.add(const SizedBox(height: 24));
-
-    children.add(
-      const Text('Booking History',
-      style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),)
-    );
-
-    children.add(const SizedBox(height: 16));
-
-    children.add(_buildBookingHistory());
-
-
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: children,
@@ -325,7 +334,13 @@ class _BasketViewState extends State<BasketView> {
         drawer: const NavDrawer(),
         body: SingleChildScrollView(
           padding: EdgeInsets.all(16.0),
-          child: content,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              content,
+              _buildBookingHistory(),
+            ],
+          ),
         ));
   }
 }
