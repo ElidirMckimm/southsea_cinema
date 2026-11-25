@@ -66,7 +66,6 @@ class _HomeViewState extends State<HomeView> {
         appBar: AppBar(
           title: const Text(
             appTitle,
-            style: cinemaHeaderStyle,
           ),
         ),
         drawer: const NavDrawer(),

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:southsea_cinema/constants.dart';
 import 'package:southsea_cinema/models/movie.dart';
 import 'package:southsea_cinema/views/movie_listing.dart';
 import 'package:southsea_cinema/widgets/primary_button.dart';
@@ -13,7 +12,7 @@ class MovieCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Card(
       margin: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
-      color: cinemaSurface,
+      color: Theme.of(context).colorScheme.surface,
       child: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
@@ -25,9 +24,9 @@ class MovieCard extends StatelessWidget {
                 Expanded(
                   child: Text(
                     movie.title,
-                    style: const TextStyle(
+                    style: TextStyle(
                       fontSize: 32,
-                      color: cinemaBrand,
+                      color: Theme.of(context).colorScheme.primary,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
@@ -35,7 +34,10 @@ class MovieCard extends StatelessWidget {
                 const SizedBox(width: 8.0),
                 Text(
                   '(${movie.ageRating})',
-                  style: TextStyle(fontSize: 20, color: Colors.grey[700]),
+                  style: TextStyle(
+                    fontSize: 20,
+                    color: Theme.of(context).colorScheme.onSurfaceVariant,
+                  ),
                 ),
               ],
             ),
@@ -58,7 +60,10 @@ class MovieCard extends StatelessWidget {
                       const SizedBox(height: 8.0),
                       Text(
                         '(Run time: ${movie.runTime} mins)',
-                        style: TextStyle(fontSize: 16, color: Colors.grey[700]),
+                        style: TextStyle(
+                          fontSize: 16,
+                          color: Theme.of(context).colorScheme.onSurfaceVariant,
+                        ),
                       ),
                     ],
                   ),

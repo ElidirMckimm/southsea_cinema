@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:southsea_cinema/constants.dart';
 import 'package:southsea_cinema/models/movie.dart';
 import 'package:southsea_cinema/widgets/nav_drawer.dart';
 import 'package:southsea_cinema/widgets/primary_button.dart';
@@ -24,14 +23,13 @@ class _MovieListingViewState extends State<MovieListingView> {
       appBar: AppBar(
         title: Text(
           widget.movie.title,
-          style: cinemaHeaderStyle,
         ),
       ),
       drawer: const NavDrawer(),
       body: SingleChildScrollView(
         child: Card(
           margin: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
-          color: cinemaSurface,
+          color: Theme.of(context).colorScheme.surface,
           child: Padding(
             padding: const EdgeInsets.all(16.0),
             child: Column(
@@ -43,9 +41,9 @@ class _MovieListingViewState extends State<MovieListingView> {
                     Expanded(
                       child: Text(
                         widget.movie.title,
-                        style: const TextStyle(
+                        style: TextStyle(
                           fontSize: 32,
-                          color: cinemaFontWhite,
+                          color: Theme.of(context).colorScheme.onSurface,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
@@ -53,7 +51,10 @@ class _MovieListingViewState extends State<MovieListingView> {
                     const SizedBox(width: 8.0),
                     Text(
                       '(${widget.movie.ageRating})',
-                      style: TextStyle(fontSize: 20, color: Colors.grey[700]),
+                      style: TextStyle(
+                        fontSize: 20,
+                        color: Theme.of(context).colorScheme.onSurfaceVariant,
+                      ),
                     ),
                   ],
                 ),
@@ -75,7 +76,9 @@ class _MovieListingViewState extends State<MovieListingView> {
                             '(Run time: ${widget.movie.runTime} mins)',
                             style: TextStyle(
                               fontSize: 16,
-                              color: Colors.grey[700],
+                              color: Theme.of(context)
+                                  .colorScheme
+                                  .onSurfaceVariant,
                             ),
                           ),
                         ],

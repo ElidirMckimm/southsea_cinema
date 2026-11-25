@@ -11,7 +11,12 @@ const String prefEmail = 'user_email';
 const String prefNewsletter = 'user_newsletter';
 
 class SettingsView extends StatefulWidget {
-  const SettingsView({super.key});
+  final Future<void> Function(bool isLightMode) onLightModeChanged;
+
+  const SettingsView({
+    super.key,
+    required this.onLightModeChanged,
+  });
 
   @override
   State<SettingsView> createState() {
@@ -107,13 +112,31 @@ class _SettingsViewState extends State<SettingsView> {
     });
   }
 
+  Future<void> _setLightMode(bool isLightMode) async {
+    try {
+      await widget.onLightModeChanged(isLightMode);
+      if (!mounted) {
+        return;
+      }
+      setState(() {
+        _confirmationMessage = '';
+      });
+    } catch (error) {
+      if (!mounted) {
+        return;
+      }
+      setState(() {
+        _confirmationMessage = 'Could not save theme setting: $error';
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
           title: const Text(
             appTitle,
-            style: cinemaHeaderStyle,
           ),
         ),
         drawer: const NavDrawer(),
@@ -168,6 +191,12 @@ class _SettingsViewState extends State<SettingsView> {
                         });
                       })
                 ],
+              ),
+              SwitchListTile(
+                contentPadding: EdgeInsets.zero,
+                title: const Text('Light mode'),
+                value: Theme.of(context).brightness == Brightness.light,
+                onChanged: _setLightMode,
               ),
               const SizedBox(height: 20),
               SizedBox(

@@ -55,7 +55,7 @@ class _BasketViewState extends State<BasketView> {
       for (final BookingRecord booking in _bookings) {
         children.add(
           Card(
-            color: cinemaBrand,
+            color: Theme.of(context).colorScheme.surface,
             margin: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
             child: Padding(
               padding: const EdgeInsets.all(16.0),
@@ -67,26 +67,33 @@ class _BasketViewState extends State<BasketView> {
                     children: <Widget>[
                       Text(
                         'Booking #${booking.bookingNumber}',
-                        style: const TextStyle(
-                            fontWeight: FontWeight.bold,
-                            color: cinemaFontWhite),
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          color: Theme.of(context).colorScheme.onSurface,
+                        ),
                       ),
                       Text(
                         '£${booking.total.toStringAsFixed(2)}',
-                        style: const TextStyle(color: cinemaFontWhite),
+                        style: TextStyle(
+                          color: Theme.of(context).colorScheme.onSurface,
+                        ),
                       ),
                     ],
                   ),
                   const SizedBox(height: 4),
                   Text(
                     booking.summary,
-                    style: TextStyle(color: cinemaFontWhite),
+                    style: TextStyle(
+                      color: Theme.of(context).colorScheme.onSurface,
+                    ),
                   ),
                   const SizedBox(height: 4),
                   Text(
                     booking.date,
-                    style:
-                        const TextStyle(fontSize: 12, color: cinemaFontWhite),
+                    style: TextStyle(
+                      fontSize: 12,
+                      color: Theme.of(context).colorScheme.onSurfaceVariant,
+                    ),
                   ),
                 ],
               ),
@@ -164,12 +171,12 @@ class _BasketViewState extends State<BasketView> {
   }
 
   Widget _buildEmptyState() {
-    return const Center(
-      child: Padding(
+    return Center(
+      child: const Padding(
         padding: EdgeInsets.symmetric(vertical: 32.0),
         child: Text(
           'Your basket is empty',
-          style: TextStyle(fontSize: 16, color: Colors.grey),
+          style: TextStyle(fontSize: 16),
         ),
       ),
     );
@@ -185,8 +192,8 @@ class _BasketViewState extends State<BasketView> {
             padding: const EdgeInsets.only(top: 8.0),
             child: Text(
               '${item.quantity} Tickets',
-              style: const TextStyle(
-                color: cinemaBrand,
+              style: TextStyle(
+                color: Theme.of(context).colorScheme.primary,
                 fontWeight: FontWeight.w600,
               ),
             ),
@@ -199,7 +206,10 @@ class _BasketViewState extends State<BasketView> {
                 Text('${item.quantity} Standard'),
                 Text(
                   '${item.movie.title}, ${item.movie.screeningTime}',
-                  style: TextStyle(fontSize: 12, color: Colors.grey[700]),
+                  style: TextStyle(
+                    fontSize: 12,
+                    color: Theme.of(context).colorScheme.onSurfaceVariant,
+                  ),
                 ),
               ],
             ),
@@ -221,8 +231,8 @@ class _BasketViewState extends State<BasketView> {
                 height: 60,
                 child: IconButton(
                   style: IconButton.styleFrom(
-                    backgroundColor: cinemaBrand,
-                    foregroundColor: cinemaFontWhite,
+                    backgroundColor: Theme.of(context).colorScheme.primary,
+                    foregroundColor: Theme.of(context).colorScheme.onPrimary,
                     shape: const RoundedRectangleBorder(
                       borderRadius: BorderRadius.zero,
                     ),
@@ -248,7 +258,10 @@ class _BasketViewState extends State<BasketView> {
     if (emphasise) {
       style = const TextStyle(fontWeight: FontWeight.bold, fontSize: 16);
     } else {
-      style = const TextStyle(color: cinemaFontWhite, fontSize: 16);
+      style = TextStyle(
+        color: Theme.of(context).colorScheme.onSurfaceVariant,
+        fontSize: 16,
+      );
     }
 
     return Padding(
@@ -349,7 +362,6 @@ class _BasketViewState extends State<BasketView> {
         appBar: AppBar(
           title: const Text(
             appTitle,
-            style: cinemaHeaderStyle,
           ),
         ),
         drawer: const NavDrawer(),
