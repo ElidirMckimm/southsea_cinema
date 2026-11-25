@@ -74,7 +74,6 @@ void main() {
     });
 
     test('JSON conversion preserves every sandwich field', () {
-      
       final Map<String, dynamic> data = <String, dynamic>{
         'id': 'dune',
         'title': 'Dune: Part Two (2024)',
@@ -93,24 +92,22 @@ void main() {
       expect(movie.price, 12.50);
       expect(movie.imagePath, 'assets/images/dune2Poster1.jfif');
       expect(movie.toJson(), data);
-      
     });
 
     test('fromJson accepts a whole-number price', () {
-        final Map<String, dynamic> data = <String, dynamic>{
+      final Map<String, dynamic> data = <String, dynamic>{
         'id': 'test',
         'title': 'test!',
-        'description':
-            'A test',
+        'description': 'A test',
         'runTime': '2h 46m',
         'ageRating': 'PG-13',
         'imagePath': 'test',
         'screeningTime': 'test',
         'price': 10,
-        };
-        final Movie movie = Movie.fromJson(data);
-        expect(movie.price, 10.0);
-        expect(movie.price, isA<double>());
+      };
+      final Movie movie = Movie.fromJson(data);
+      expect(movie.price, 10.0);
+      expect(movie.price, isA<double>());
     });
   });
 }

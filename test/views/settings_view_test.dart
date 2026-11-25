@@ -12,7 +12,6 @@ void main() {
         InMemorySharedPreferencesAsync.empty();
   });
   test('UserSettings defaults to empty value and false newsletter', () {
-
     const UserSettings settings = UserSettings();
     expect(settings.name, isEmpty);
     expect(settings.address, isEmpty);
@@ -21,13 +20,11 @@ void main() {
   });
 
   test('UserSettings stores configured values', () {
-
     const UserSettings settings = UserSettings(
       name: 'Alice Wilson',
       address: '717F Rosalind Franklin Halls',
       email: 'alicew@example.com',
       receiveNewsLetter: true,
-
     );
     expect(settings.name, 'Alice Wilson');
     expect(settings.address, '717F Rosalind Franklin Halls');

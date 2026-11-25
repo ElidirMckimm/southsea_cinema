@@ -141,6 +141,18 @@ class _BasketViewState extends State<BasketView> {
       setState(() {
         _confirmationMessage = 'Booking $bookingNumber saved';
       });
+
+      try {
+        await _loadBookings();
+      } catch (error) {
+        if (!mounted) {
+          return;
+        }
+        setState(() {
+          _confirmationMessage =
+              'Booking $bookingNumber saved, but booking history could not be refreshed: $error';
+        });
+      }
     } catch (error) {
       if (!mounted) {
         return;
@@ -257,6 +269,15 @@ class _BasketViewState extends State<BasketView> {
     children.add(const Text('MY BASKET',
         style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold)));
     children.add(const SizedBox(height: 16));
+
+    if (_confirmationMessage.isNotEmpty) {
+      children.add(
+        Text(
+          _confirmationMessage,
+          style: const TextStyle(fontWeight: FontWeight.bold),
+        ),
+      );
+    }
 
     for (int index = 0; index < items.length; index++) {
       final CartItem item = items[index];

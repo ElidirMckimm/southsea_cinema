@@ -18,10 +18,9 @@ class PrimaryButton extends StatelessWidget {
         backgroundColor: cinemaBrand,
         foregroundColor: cinemaFontWhite,
         shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.zero,
+          borderRadius: BorderRadius.zero,
         ),
       ),
-
       onPressed: onPressed,
       child: Text(label),
     );

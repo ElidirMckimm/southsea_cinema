@@ -29,8 +29,7 @@ void main() {
       expect(find.text('Book Now'), findsAny);
     });
 
-    testWidgets('Booking navigation',
-        (WidgetTester tester) async {
+    testWidgets('Booking navigation', (WidgetTester tester) async {
       await tester.pumpWidget(const SouthseaCinemaApp());
 
       await tester.tap(find.text('Book Now').first);
@@ -52,14 +51,15 @@ void main() {
 
       // ON HOME PAGE
 
-      final secondButton = find.widgetWithText(ElevatedButton, 'Book Now').at(1); // ensures button itself is being tapped
+      final secondButton = find
+          .widgetWithText(ElevatedButton, 'Book Now')
+          .at(1); // ensures button itself is being tapped
       await tester.ensureVisible(secondButton);
       await tester.pumpAndSettle();
       await tester.tap(secondButton, warnIfMissed: true);
       await tester.pumpAndSettle();
 
       expect(find.text('Tickets (£10.00 each)'), findsOneWidget);
-
     });
   });
 }

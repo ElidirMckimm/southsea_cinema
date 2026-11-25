@@ -1,7 +1,6 @@
 import 'package:southsea_cinema/models/cart_item.dart';
 
 class CartRepository {
- 
   CartRepository._internal();
   static final CartRepository instance = CartRepository._internal();
 
@@ -22,11 +21,11 @@ class CartRepository {
   }
 
   int getTotalItems() {
-   int total = 0;
-   for (final CartItem item in _items) {
-     total += item.quantity;
-   }
-   return total;
+    int total = 0;
+    for (final CartItem item in _items) {
+      total += item.quantity;
+    }
+    return total;
   }
 
   double getTotalPrice() {
