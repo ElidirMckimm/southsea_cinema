@@ -10,9 +10,10 @@ void main() {
       final MovieRepository repository = MovieRepository();
       final List<Movie> movies = await repository.loadMoviesFromAsset();
 
-      expect(movies.length, 2);
+      expect(movies.length, 3);
       expect(movies[0].id, 'dune');
       expect(movies[1].id, 'batman');
+      expect(movies[2].id, 'lalaland');
       //checks if it returns the cached list
       expect(repository.getMovies(), movies);
     });

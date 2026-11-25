@@ -6,7 +6,9 @@ import 'package:southsea_cinema/widgets/movie_card.dart';
 import 'package:southsea_cinema/widgets/nav_drawer.dart';
 
 class HomeView extends StatefulWidget {
-  const HomeView({super.key});
+  final Future<List<Movie>> Function()? movieLoader;
+
+  const HomeView({super.key, this.movieLoader});
 
   @override
   State<HomeView> createState() => _HomeViewState();
@@ -26,7 +28,8 @@ class _HomeViewState extends State<HomeView> {
   Future<void> _loadMovies() async {
     try {
       final MovieRepository repository = MovieRepository();
-      final List<Movie> movies = await repository.loadMoviesFromAsset();
+      final List<Movie> movies = await (widget.movieLoader?.call() ??
+          repository.loadMoviesFromAsset());
       //mounted is true while the state belongs to the widget tree
       if (!mounted) {
         return;

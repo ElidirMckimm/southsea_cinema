@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:southsea_cinema/constants.dart';
+import 'package:southsea_cinema/models/movie.dart';
 import 'package:southsea_cinema/views/home_view.dart';
 import 'package:southsea_cinema/views/basket_view.dart';
 import 'package:southsea_cinema/views/settings_view.dart';
@@ -10,7 +11,9 @@ void main() {
 }
 
 class SouthseaCinemaApp extends StatefulWidget {
-  const SouthseaCinemaApp({super.key});
+  final Future<List<Movie>> Function()? movieLoader;
+
+  const SouthseaCinemaApp({super.key, this.movieLoader});
 
   @override
   State<SouthseaCinemaApp> createState() => _SouthseaCinemaAppState();
@@ -66,7 +69,7 @@ class _SouthseaCinemaAppState extends State<SouthseaCinemaApp> {
       themeMode: _themeMode,
       initialRoute: '/',
       routes: {
-        '/': (context) => const HomeView(),
+        '/': (context) => HomeView(movieLoader: widget.movieLoader),
         '/basket': (context) => const BasketView(),
         '/settings': (context) =>
             SettingsView(onLightModeChanged: _setLightMode),

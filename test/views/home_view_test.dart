@@ -3,6 +3,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences_platform_interface/in_memory_shared_preferences_async.dart';
 import 'package:shared_preferences_platform_interface/shared_preferences_async_platform_interface.dart';
 import 'package:southsea_cinema/main.dart';
+import 'package:southsea_cinema/repositories/movie_repository.dart';
 import 'package:southsea_cinema/views/home_view.dart';
 
 void main() {
@@ -20,7 +21,12 @@ void main() {
     });
 
     testWidgets('Displays movie cards on home', (WidgetTester tester) async {
-      await tester.pumpWidget(const SouthseaCinemaApp());
+      await tester.pumpWidget(
+        SouthseaCinemaApp(
+          movieLoader: () async => MovieRepository().getMovies(),
+        ),
+      );
+      await tester.pumpAndSettle();
 
       expect(find.text('Dune: Part Two (2024)'), findsOneWidget);
       expect(
@@ -37,7 +43,12 @@ void main() {
     });
 
     testWidgets('Booking navigation', (WidgetTester tester) async {
-      await tester.pumpWidget(const SouthseaCinemaApp());
+      await tester.pumpWidget(
+        SouthseaCinemaApp(
+          movieLoader: () async => MovieRepository().getMovies(),
+        ),
+      );
+      await tester.pumpAndSettle();
 
       await tester.tap(find.text('Book Now').first);
       await tester.pumpAndSettle();
