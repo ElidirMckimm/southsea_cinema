@@ -16,6 +16,70 @@ class BasketView extends StatefulWidget {
 
 class _BasketViewState extends State<BasketView> {
   String _confirmationMessage = '';
+  List<BookingRecord> _bookings = [];
+  bool _loadingBookings = true;
+
+  @override
+  void initState() {
+    super.initState();
+    _loadBookings();
+  }
+
+  Future<void> _loadBookings() async {
+    final List<BookingRecord> bookings =
+        await CinemaDatabase.instance.getAllBookings();
+    if (!mounted) {
+      return;
+    }
+
+    setState(() {
+      _bookings = bookings;
+      _loadingBookings = false;
+    });
+  }
+
+  Widget _buildBookingHistory() {
+    if (_loadingBookings) {
+      return const CircularProgressIndicator();
+    }
+
+    if (_bookings.isEmpty) {
+      return const Text('No bookings yet');
+    }
+
+    return Column(
+      children: _bookings.map((booking) {
+        return Card(
+          margin: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+          child: Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: <Widget>[
+                    Text(
+                      'Booking #${booking.bookingNumber}',
+                      style: const TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                    Text('£${booking.total.toStringAsFixed(2)}'),
+                  ],
+                ),
+                const SizedBox(height: 4),
+                Text(booking.summary),
+                const SizedBox(height: 4),
+                Text(
+                  booking.date,
+                  style: const TextStyle(fontSize: 12, color: cinemaFontWhite),
+                ),
+              ],
+            ),
+          ),
+        );
+      }).toList(),
+    );
+  }
 
   String _buildSummary(List<CartItem> items) {
     final List<String> parts = [];
@@ -206,6 +270,18 @@ class _BasketViewState extends State<BasketView> {
         ),
       ),
     );
+
+    children.add(const SizedBox(height: 24));
+
+    children.add(
+      const Text('Booking History',
+      style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),)
+    );
+
+    children.add(const SizedBox(height: 16));
+
+    children.add(_buildBookingHistory());
+
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
